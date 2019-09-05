@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <!--head runs before body-->
+        <!--Nothing visible in the head-->
+        <title></title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+        /*css looks for style rules to follow, ex: inline*/
+        /*to specify a class, put a '.' in front of it*/
+        /*a ',' is like an 'and'*/
+            /*html, body, .full_page{*/
+            /*    width: 100%;*/
+            /*    height: 100%;*/
+            /*}*/
+            /*custome_element{*/
+                /*custom element is inline by default but we can make it whatever we want*/
+            /*    display: block;*/
+            /*}*/
+            
+            main{
+                text-align: center;
+                border: 2px solid black;
+                background: lightgray;
+                padding: 3px;  
+            }
+            box, header, nav, footer{
+                text-align: center;
+                border: 2px solid black;
+                background: white;
+                padding: 3px;  
+                margin: 1px;
+            }
+            section, article{
+                text-align: center;
+                border: 2px solid black;
+                background: white;
+                padding: 10px;  
+                margin: 1px;
+            }
+            /*aside{*/
+            /*    float: right;*/
+                /*text-align: center;*/
+                /*vertical-align: middle;*/
+            /*    border: 2px solid black;*/
+            /*    background: white;*/
+            /*    height: 81px;*/
+            /*    width: 35px;*/
+                /*padding: 31.5px;  */
+            /*    margin: 1px;*/
+            /*}*/
+            /*define a style class*/
+            .inline{
+                /*style definitions*/
+                display: inline;
+            }
+            .block {
+                display: inline-block;
+            }
+            .flex-container {
+                display: flex;
+                float: right;
+                border: 2px solid black;
+                background-color: white;
+                margin: 1px;
+                width: 40px;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 81px;
+              /*font-size: 30px;*/
+            }
+        </style>
+    </head>
+    
+    <body>
+        
+        <!--default main has display block, makes it seperate from everything before it with an endline-->
+        <!--since we said class = "inline" we made it follow our rule-->
+        <!--we can add multiple classes ex: "inline full_page"-->
+        <main class = "block">
+            <header>
+                header
+            </header>
+            
+            <nav>
+                nav
+            </nav>
+            
+            <content class="block">
+                <section>
+                section
+                </section>
+                
+                <article>
+                    article
+                </article>
+            </content>
+            
+            <aside class = "flex-container">
+                aside
+            </aside>
+            
+            <footer>
+                footer
+            </footer>
+        </main>
+        
+        <custom_element>
+            <!--custom tags' style default are inline-->
+        </custom_element>
+    
+        
+    </body>
+
+
+</html>

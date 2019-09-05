@@ -1,0 +1,65 @@
+body{
+    background-color: black;
+    color: white;
+}
+
+header, main, nav, footer{
+    text-align: center;
+}
+
+nav a{
+    padding: 15px;
+    padding-bottom: 4px;
+    font-size: 1.8em;
+    color: white;
+}
+
+nav a:hover{
+    border-bottom: 2px solid orange;
+    font-size: 2em;
+    transition: .9s;
+}
+
+#me, #welcomeText {
+    float: left;
+    text-align: left;
+}
+
+footer{
+    clear: left;
+    color: gray;
+    font-size: .7em;
+}
+
+table{
+    margin: 0px auto;
+}
+
+tr{
+    text-align: center;
+    color: darkblue;
+}
+
+td{
+    padding-right: 10px;
+    font-size: 1.3em;
+}
+
+td strong{
+    text-align: center;
+    color: lightblue;
+}
+
+#table-header{
+    background-color: #0B5FA7;
+}
+
+.table-row{
+    background-color: #5EAEF4;
+}
+
+ul{
+    text-align: left;
+    padding-left: 275px;
+    color: white;
+}
