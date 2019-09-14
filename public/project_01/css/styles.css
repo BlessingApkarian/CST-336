@@ -85,7 +85,7 @@ p {
     color: #51E490;
 }
 
-info{
+div{
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
@@ -98,6 +98,6 @@ ul{
     color: #51E490;
 }
 
-info > a{
+div > a{
     color: #51E490;
 }
