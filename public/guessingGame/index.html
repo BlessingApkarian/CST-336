@@ -12,23 +12,121 @@
         <!--Custom Styles-->
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
     </head>
-    <script>
-        //all javascript code should go in the script tag
-        // declare a variable:
-        var randomNumber = 5 + 6;
-        //consol will help debugging
-        console.log(randomNumber);
-        
-    </script>
+    
     <body>
 
         <div class="jumbotron">
             <h1>Guess a Number</h1>
         </div>
         
-        <div id="directions">
+        <div id="directions" class = "resultParas">
             Guess a number between 1 and 99 in seven attempts!
+            
+            <br><br>
+            <label for = "guessField">Enter a guess: </label>
+            <input type = "text" id = "guessField" class = "guessField">
+            <input type = "submit" value = "Submit guess" class = "guessSubmit">
+            
+            <br><br>
+            <p id = "guesses"></p>
+            <p id = "lastResult"></p>
+            <p id = "lowOrHi"></p>
+            <button id = 'reset'>Reset</button>
+            
+            <!--Random Number: <span id = "numberToGuess"></span>-->
         </div>
+            <script>
+            // //all javascript code should go in the script tag
+            // // declare a variable:
+            var randomNumber = Math.floor(Math.random() * 99) + 1;
+            // //consol will help debugging
+            // document.getElementById("numberToGuess").innerHTML = randomNumber;
+            
+            var guesses = document.querySelector('#guesses');
+            var lastResult = document.querySelector('#lastResult');
+            var lowOrHi = document.querySelector('#lowOrHi');
+            
+            var guessSubmit = document.querySelector('.guessSubmit');
+            var guessField = document.querySelector('.guessField');
+            
+            var guessCount = 1;
+            var resetButton = document.querySelector('#reset');
+            resetButton.style.display = 'none';
+            
+            function checkGuess() {
+                var userGuess = Number(guessField.value);
+                if(guessCount === 1) {
+                    guesses.innerHTML = 'Previous guesses: ';
+                }
+                guesses.innerHTML += userGuess + " ";
+                
+                if(userGuess === randomNumber){
+                    lastResult.innerHTML = "Congratulations! You got it right!";
+                    lastResult.style.backgroundColor = "green";
+                    lowOrHi.innerHTML = " ";
+                    setGameOver();
+                } else if (guessCount === 7) {
+                    lastResult.innerHTML = "Sorry, you lost!";
+                    setGameOver();
+                } else {
+                    lastResult.innerHTML = "Wrong!";
+                    lastResult.style.backgroundColor = "red";
+                    if(userGuess < randomNumber) {
+                        lowOrHi.innerHTML = 'Last guess was too low!';
+                    } else if (userGuess > randomNumber) {
+                        lowOrHi.innerHTML = 'Last guess was too high!';
+                    }
+                }
+                
+                guessCount++;
+                
+                if(userGuess > 99){
+                    lastResult.innerHTML = "Your guess is too high, retry.";
+                    lastResult.style.backgroundColor = "red";
+                    lowOrHi.innerHTML = " ";
+                    guessCount--;
+                } else if (userGuess < 1) {
+                    lastResult.innerHTML = "Your guess is too low, try again.";
+                    lastResult.style.backgroundColor = "red";
+                    lowOrHi.innerHTML = " ";
+                    guessCount--;
+                }
+                
+                guessField.value = '';
+                guessField.focus();
+            }
+            
+            guessSubmit.addEventListener('click', checkGuess);
+            
+            function setGameOver() {
+               guessField.disabled = true;
+               guessSubmit.disabled = true;
+               resetButton.style.display = 'inline';
+               resetButton.addEventListener('click', resetGame);
+            }
+            
+            function resetGame() {
+                guessCount = 1;
+                
+                var resetParas = document.querySelectorAll(".resetParas p");
+                for(var i = 0; i < resetParas.length; i++){
+                    resetParas[i].textContent = "";
+                }
+                
+                resetButton.style.display = "none";
+                guessField.disabled = false;
+                guessSubmit.disabled = false;
+                guessField.value = "";
+                guessField.focus();
+                
+                lastResult.style.backgroundColor = "white";
+                
+                randomNumber = Math.floor(Math.random() * 99) + 1;
+            }
+            
+        </script>
         
+        <script SRC = "js/functions.js"></script>
     </body>
+    
 </html>

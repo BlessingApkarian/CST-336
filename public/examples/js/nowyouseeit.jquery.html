@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Now You See Me</title>
+        
+        <style>
+            .hide{
+                display: none;
+            }
+        </style>
+        
+    </head>
+    <body>
+        
+        <img id = see src = "img/now-you-see-me.png"/>
+        <!--<img id = dont src = "img/now-you-dont.png"/>-->
+        
+        <button id="button">Click ME!</button>
+        <button id="moon">MOON</button>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+        <script>
+        
+            // console.dir(document);
+        
+            // let seeImg = document.getElementById('see');
+            var seeImg = $("#see"); // jquery
+            
+            // let changeButton = document.getElementById("button");
+            var changeButton = $("#button");
+            
+            // changeButton.addEventListener('click', function(e) {
+            // //   console.log('clicked with event info', e);
+            //     seeImg.setAttribute('src', 'img/now-you-dont.png');
+            // });
+            changeButton.on('click', function(e) {
+            //   console.log('clicked with event info', e);
+                seeImg.attr('src', 'img/now-you-dont.png');
+            });
+            
+            // document
+            //     .getElementById('moon')
+            //     .addEventListener('click', function(e) {
+            //         seeImg.setAttribute('class', 'hide');
+            //     });
+            $("#moon").on("click", onMoonClick).on("touchstart", onMoonClick);
+            //Method chaining
+            function onMoonClick(argument) {
+                seeImg.attr('class', 'hide');
+            }
+            
+            // console.dir(changeButton);
+            
+            // console.log(console);
+            // console.log(document);
+        </script>
+        
+    </body>
+    
+</html>

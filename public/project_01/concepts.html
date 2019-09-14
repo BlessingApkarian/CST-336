@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Activity Lifecycle Concepts</title>
+        <meta char=”utf-8” />
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        
+        <header> 
+            <h1>Activity Lifecycle Concepts</h1>
+        </header>
+        
+        <nav>
+            <hr>
+            <a href="index.html">Home</a>
+            <a href="concepts.html">Concepts</a>
+            <a href="callback.html">Callbacks</a>
+            
+            <a href="instances.html">Instances</a>
+        </nav>
+        
+        <main class = "flex-container">
+            <map id = "oof">
+                <img src = "img/activity_lifecycle.png" alt = "Lifecycle Concept Map"/>
+            </map>
+            
+            <info id = "oof">
+                To smoothly transition between the stages of the activity lifecycle, the Activity instance holds six, very important callbacks:
+                <ul>
+                    <li>.onCreate()</li>
+                    <li>.onDestroy()</li>
+                    <li>.onStart()</li>
+                    <li>.onStop()</li>
+                    <li>.onPause()</li>
+                    <li>.onResume()</li>
+                </ul>
+                
+                The concept map shows us every possible path the user could take while using an app.
+                If the user opens more than one app, the app they start using uses .onCreate() method and starts 
+                up while the app they had previously open, but did not cancel, goes into the .onPause() method.
+                If the user cancels either app it will activate .onDestroy(). However, they can bounce between as many apps implementing these
+                callbacks without any consequences. 
+                <br /> 
+                Get more  information on callback methods in the "<a href="callback.html">Callbacks</a>" page.
+            </info>
+            
+        </main>
+        
+        <footer>
+            <a href="https://developer.android.com/guide/components/activities/activity-lifecycle">Source</a>
+            <hr>
+                CST 336 2019&copy; Apkarian <br />
+                <strong>Disclaimer:</strong> The information in this webpage is ficticous.<br />
+                It is used for academic purpose only.
+        </footer>
+
+    </body>
+</html>
