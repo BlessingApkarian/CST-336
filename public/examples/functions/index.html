@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--    09-24-19     -->
+<!--    Functions:
+                -->
+<html>
+    <head>
+        <title>Functions</title>
+    </head>
+    <body>
+        
+        
+        <script>
+            //if I decalre a function, I can call it anywhere
+            
+            // example 1
+            // regardless of whether or not a function has parameters, arguments can be passed in
+            // arguments reserved word
+            function example1(){
+                console.log("example1", arguments);
+            }
+            
+            // example1(); // console will result in 0 arguments
+            // example1("blessing", 19); // 
+            
+            example1("Apkarian", 19);
+            example1 = "Name";
+            
+            //this wont work
+            // example2();
+            
+            //example 2
+            // let example2 = function(){ // example 2 is not a fucntion, it is null or undefined since the function doesn't return anything
+            //     console.log("example2", arguments);
+            // }("Yo Bro", 0);
+            
+            //assignment operator, evaluate right, pass into left
+            let example2 = function(){ // example 2 is a fucntion
+                console.log("example2", arguments);
+                
+                return function(){
+                    return "done";
+                }//(); makes example2 set to "done"
+            }("Yo Bro", 0); // these parenthasis make the funciton run immidiately
+            
+            example2("1st Arg");
+            // example2();
+            // example2("Blessing", 21);
+            
+            //anyhting with "()" next to it will try to run
+            
+            let name = "Blessing";
+            
+            //error
+            //name();
+            
+            name = example2();
+            
+        </script>
+
+    </body>
+</html>

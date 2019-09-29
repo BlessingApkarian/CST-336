@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Local Storage</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <body class = "container">
+        
+        <h1>0</h1>
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+        <script>
+            /* global $ */
+            $(function(){
+                
+                let counter;
+                
+                //do we support local sotrage?
+                if(window.localStorage) {
+                    //null coelessence, set the value to counter if it exists, if not set it to 0
+                    counter = window.localStorage.getItem("counter1") || 0;
+                } else {
+                    counter = parseInt($("h1").html() || 0);
+                }
+                
+                console.log("before", $("h1").html());
+                
+                //increment
+                counter++;
+                
+                if(window.localStorage) {
+                    window.localStorage.setItem("counter1", counter);
+                }
+                
+                $("h1").html(counter);
+                
+                console.log("after", $("h1").html());
+            })
+        </script>
+
+    </body>
+</html>

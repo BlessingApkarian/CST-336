@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Geo Quiz</title>
+        
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+        
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!--<script src="https://code.jquery.com/jquery.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+        <style>
+            
+            .bg_info{
+                background-color: lightblue !important;
+            }
+            
+            .hide_when_loaded{
+                display: none;
+            }
+            
+        </style>
+    
+    </head>
+    <body class = "text-center">
+        
+        <header class = "d-flex justify-content-center p-5 bg-light">
+            
+            <h1>US Geography Quiz</h1>
+            
+        </header>
+        
+        <main class = "bg_info p-5">
+            
+            <img src = "img/checkmark.png" class = "hide_when_loaded" />
+            <img src = "img/xmark.png" class = "hide_when_loaded" />
+            
+            <h3 class = "m-1"> What is the capital of California? </h3>
+            <br>
+            <input type = "text" id = "q1" class = "m-1">
+            <br><br>
+            <div id = "q1Feedback"></div>
+            <br><br>
+            
+            <h3><span id = "m-1"></span> What is the longest River? </h3>
+            <select id = "q2">
+                <option value = ""> Select One </option>
+                <option value = "ms"> Mississippi </option>
+                <option value = "mo"> Missouri </option>
+                <option value = "co"> Colorado </option>
+                <option value = "de"> Delaware </option>
+            </select>
+            <br><br>
+            <div id = "q2Feedback"></div>
+            <br>
+            
+            <h3 id = "validationFdbk" class = "bg-danger text-white"></h3>
+            <button class = "btn btn-outline-success m-1">Submit Quiz</button>
+            <br>
+            <h2 id = "totalScore" class = "text-info"></h2>
+        
+        </main>
+        
+        <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+        
+        <script>
+        /* global $*/ // <--- this takes away jquery errors
+        //Use ready() to make a function available after the document is loaded
+            $(document).ready(function(){
+                //these \/ /\ are =
+                // $(function(){
+                    
+                // });
+                
+                $("button").on("click", gradeQuiz);
+                
+                // on click listener example/log
+                    // $("button").on("click", function(){
+                    //     console.log($("#q1").val());
+                    // })
+                    
+            //on click listener for successful answer
+                $("button[type='submit']").on("click touchstart", showSuccess);
+                
+                function showSuccess(e){
+                    //cancel default behavior
+                    e.preventDefault();
+                    $(".alert-success").show();
+                }
+                
+            //on click listener for wrong answer
+                $("button[type='submit']").on("click touchstart", showFail);
+                
+                function showFail(e){
+                    //cancel default behavior
+                    e.preventDefault();
+                    $(".alert-false").show();
+                }
+                
+            //function returns a boolean to find if the fields have been filled
+                function isFormValid(){
+                    let isValid = true;
+                    if($("#q1").val() == ""){ // checks if the text box in q1 is empty 
+                        isValid = false;
+                        $("#validationFdbk").html("Question 1 was not answered");
+                    }
+                    return isValid;
+                }
+                
+            //grades quiz
+                function gradeQuiz(){
+                    $("#validationFdbk").html("");//resets validation feedback
+                    
+                    if(!isFormValid()){
+                        return;
+                    }
+                    
+                    //variables
+                    let score = 0;
+                    let q1Response = $("#q1").val().toLowerCase();
+                    let q2Response = $("#q2").val();     
+                    
+                    //Question1
+                    if(q1Response == "sacramento"){
+                        $("#q1Feedback").html("Correct!");
+                        $("#q1Feedback").attr("class", "bg-success text-white");
+                        $("#markImg1").html("img src = 'img/checkmark.png' alt = 'checkmark'");
+                        score += 20;
+                    } else {
+                        $("#q1Feedback").html("Incorrect!");
+                        $("#q1Feedback").attr("class", "bg-warning text-white");
+                        $("#markImg1").html("img src = 'img/xmark.png' alt = 'xmark'");
+                    }
+                    
+                    //Question2
+                    if(q2Response == "mo"){
+                        $("#q2Feedback").html("Correct!");
+                        $("#q2Feedback").attr("class", "bg-success text-white");
+                        $("#markImg2").html("img src = 'img/checkmark.png' alt = 'checkmark'");
+                        score += 20;
+                    } else {
+                        $("#q2Feedback").html("Incorrect!");
+                        $("#q2Feedback").attr("class", "bg-warning text-white");
+                        $("#markImg1").html("img src = 'img/xmark.png' alt = 'xmark'");
+                    }
+                    
+                    $("#totalScore").html("Total Score: " + score);
+                }
+            });
+            
+        </script>
+    
+    </body>
+</html>
