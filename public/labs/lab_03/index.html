@@ -36,8 +36,8 @@
         
         <main class = "bg_info p-5">
             
-            <img src = "img/checkmark.png" class = "hide_when_loaded" />
-            <img src = "img/xmark.png" class = "hide_when_loaded" />
+            <!--<img src = "img/checkmark.png" class = "hide_when_loaded" />-->
+            <!--<img src = "img/xmark.png" class = "hide_when_loaded" />-->
             
             <h3 class = "m-1"> What is the capital of California? </h3>
             <br>
@@ -130,24 +130,24 @@
                     if(q1Response == "sacramento"){
                         $("#q1Feedback").html("Correct!");
                         $("#q1Feedback").attr("class", "bg-success text-white");
-                        $("#markImg1").html("img src = 'img/checkmark.png' alt = 'checkmark'");
+                        $("#markImg1").html("<img src = 'img/checkmark.png' alt = 'checkmark'>");
                         score += 20;
                     } else {
                         $("#q1Feedback").html("Incorrect!");
                         $("#q1Feedback").attr("class", "bg-warning text-white");
-                        $("#markImg1").html("img src = 'img/xmark.png' alt = 'xmark'");
+                        $("#markImg1").html("<img src = 'img/xmark.png' alt = 'xmark'>");
                     }
                     
                     //Question2
                     if(q2Response == "mo"){
                         $("#q2Feedback").html("Correct!");
                         $("#q2Feedback").attr("class", "bg-success text-white");
-                        $("#markImg2").html("img src = 'img/checkmark.png' alt = 'checkmark'");
+                        $("#markImg2").html("<img src = 'img/checkmark.png' alt = 'checkmark'>");
                         score += 20;
                     } else {
                         $("#q2Feedback").html("Incorrect!");
                         $("#q2Feedback").attr("class", "bg-warning text-white");
-                        $("#markImg1").html("img src = 'img/xmark.png' alt = 'xmark'");
+                        $("#markImg2").html("<img src = 'img/xmark.png' alt = 'xmark'>");
                     }
                     
                     $("#totalScore").html("Total Score: " + score);
