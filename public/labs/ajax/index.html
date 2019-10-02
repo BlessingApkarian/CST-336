@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sign-up Page</title>
+        <title> Sign-up Page </title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
     </head>
+    
     <body>
-        
-        <form>
+        <!--method = "post" makes it so the information submitted in the form doesnt show in the URL-->
+        <h1>Sign Up</h1>
+        <form id = "signupForm" method = "get" action = "welcome.html"> 
             
-            First Name:     <input type = "text" name = "fname"><br>
-            Last Name:      <input type = "text" name = "lname"><br>
-            Gender:         <input type = "radio" name = "gender" value = "m"> Male
-                            <input type = "radio" name = "gender" value = "f"> Female <br><br> 
-                    
-            Zip Code:       <input type = "text" name = "zip" id = "zip"><br>
-            City:           <span id = "city"></span><br>
-            Latitude:       <span id = "latitude"></span><br>
-            Longitude:      <span id = "longitude"></span><br><br>
-            
-            State: 
-            <select id = "state" name = "state">
-                    <option value = ""> Select One </option>
-                    <option value = "CA"> California </option>
-                    <option value = "NY"> New York </option>
-                    <option value = "TX"> Texas </option>
-            </select><br />
-            
-            Select a County: <select id = "county"></select><br><br>
-            
-            Desired Username: <input type = "text"     id = "username" name = "username"><br>
-            Password:         <input type = "password" id = "password" name = "password"><br>
-            Password Again:   <input type = "passwordAgain" id = "passwordAgain"><br>
-            
-            <input type = "submit" value = "Sign up!">
+            <!--<h1>Sign Up</h1>-->
+            <p>
+                First Name:     <input type = "text"  name = "fname"><br>
+                Last Name:      <input type = "text"  name = "lname"><br>
+                Gender:         <input type = "radio" name = "gender" value = "m"> Male
+                                <input type = "radio" name = "gender" value = "f"> Female <br><br> 
+                        
+                Zip Code:       <input id = "zip" type = "text" name = "zip"><br>
+                City:           <span  id = "city"></span><br>
+                Latitude:       <span  id = "latitude"></span><br>
+                Longitude:      <span  id = "longitude"></span><br><br>
+                
+                State: 
+                <select id = "state" name = "state"></select><br />
+                
+                Select a County: <select id = "county"></select><br><br>
+                
+                Desired Username: <input type = "text"     id = "username" name = "username"><br>
+                                  <span id = "usernameError"></span><br>
+                Password:         <input type = "password" id = "password" name = "password"><br>
+                Password Again:   <input type = "passwordAgain" id = "passwordAgain"><br>
+                                  <span id = "passwordAgainError"></span><br>
+                                  
+                <input type = "submit" value = "Sign up!">
+            </p>
             <!-- /\ could have been: <button> Sign Up! </button>-->
         </form>
         
         <script>
             /* global $*/
+            
+            let usernameAvailable = false;
             
             //displaying City from API after typing a zip
             $("#zip").on("change", function(){ // change instead of click because if you use click and 
@@ -48,7 +53,7 @@
                 
                 $.ajax({
                     method:   "GET",
-                    url:      "//cst336.herokuapp.com/projects/api/cityInfoAPI.php",
+                    url:      "https://cst336.herokuapp.com/projects/api/cityInfoAPI.php",
                     dataType: "json",
                     data:   { "zip": $("#zip").val()},
                     success: function(result,status) {
@@ -60,9 +65,94 @@
                     
                     } 
                 });//ajax
-
+            }); // zip
+            
+            $(document).ready(function(){
+                $.ajax({
+                    method:   "GET",
+                    url:      "https://cst336.herokuapp.com/projects/api/state_abbrAPI.php",
+                    dataType: "json",
+                    data:   { "state": $("#state").val()},
+                    success: function(result,status) {
+                        $("#state").html("<option> Select One </option>");
+                        // This works the same as the for-loop
+                        result.forEach(function(i) {  
+                            $("#state").append("<option>" + i.usps + "</option>");
+                        });
+                    } 
+                });// ajax
+            }); // state
+            
+            $("#state").on("change", function(){
+                $.ajax({
+                    method:   "GET",
+                    url:      "https://cst336.herokuapp.com/projects/api/countyListAPI.php",
+                    dataType: "json",
+                    data:   { "state": $("#state").val()},
+                    success: function(result,status) {
+                        //alert(result[0].county);
+                        $("#county").html("<option> Select One </option>");
+                        for(let i = 0; i < result.length; i++){
+                            $("#county").append("<option>" + result[i].county + "</option>");
+                        }
+                    } 
+                });//ajax
+            }); // county
+            
+            $("#username").change(function(){
                 
+                //alert($("#username").val());
+                $.ajax({
+                    method:   "GET",
+                    url:      "https://cst336.herokuapp.com/projects/api/usernamesAPI.php?username=eeny",
+                    dataType: "json",
+                    data:   { "username": $("#username").val()},
+                        success: function(result, status) {
+                            if(result.available){
+                                $("#usernameError").html("Usernmane is available");
+                                $("#usernameError").css("color", "green");
+                                usernameAvailable = true;
+                            } else {
+                                $("#usernameError").html("Username is unavailable!");
+                                $("#usernameError").css("color", "red");
+                                usernameAvailable = false;
+                            }
+                        }
+                });// ajax
+            }); // username
+            
+            $("#signupForm").on("submit", function(event){
+                
+                if(!isFormValid()){
+                event.preventDefault();
+                }else{
+                    alert("Submitting form...");
+                }
+                
+                function isFormValid(){
+                    let isValid = true;
+                    if(!usernameAvailable){
+                        isValid = false;
+                    }
+                    if($("#username").val().length == 0){
+                        isValid = false;
+                        $("#usernameError").html("Username is required");
+                        $("#usernameError").css("color", "red");
+                    }
+                    if($("#password").length < 6){
+                        $("#passwordAgainError").html("Password length must be a minimum of 6 characters");
+                        $("#passwordAgainError").css("color", "red");
+                        isValid = false;
+                    }
+                    if($("#password").val() != $("#passwordAgain").val()){
+                        $("#passwordAgainError").html("Password Mismatch");
+                        $("#passwordAgainError").css("color", "red");
+                        isValid = false;
+                    }
+                    return isValid;
+                }
             });
+            
         </script>
     </body>
 </html>

@@ -1,0 +1,18 @@
+body > h1{
+    display: flex;
+    align-items: center; /* need these together to make the item center of the box */
+    justify-content: center; 
+    width: 100%;
+    height: 100px;
+    background-color: #E69DA0;
+    color: white;
+}
+
+form{
+    padding: 15px;
+    background-color: #9DE6E3;
+}
+
+form > p{
+    margin-left: 50px;
+}
