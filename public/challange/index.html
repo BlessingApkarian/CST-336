@@ -1,0 +1,182 @@
+<html>
+<head>
+    <title></title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+    <style>
+        tr, td{
+            border:1px gray solid;
+            text-align: right;
+            padding:5px;
+        }
+
+        body, th {
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="jumbotron"> Holiday Shopping  </h1>
+
+    <h2> Cart </h2>
+
+    <table>
+    <tr>
+        <th>Product</th>
+        <th>Unit Price</th>
+        <th> Quantity </th>
+        <th>Total</th>
+    </tr>
+
+    <tr>
+        <td>Fruit Cake</td>
+        <td>$30</td>
+        <td><input type="text" class="qty" id="qty_item1" size="5" value="1">  </td>
+        <td id="totalItem1">$30</td>
+    </tr>
+
+    <tr>
+        <td>Piñata (Medium size)</td>
+        <td>$20</td>
+        <td><input type="text" class="qty" id="qty_item2" size="5" value="2">  </td>
+        <td id="totalItem2">$40</td>
+    </tr>
+
+   <tr>
+        <td>Shipping</td>
+        <td></td>
+        <td> </td>
+        <td id="shippingCost">$10</td>
+    </tr>    
+
+    <tr>
+        <td>Subtotal</td>
+        <td> </td>
+        <td> </td>
+        <td id="subtotal">$80</td>
+    </tr>             
+
+    <tr>
+        <td>Tax (10%)</td>
+        <td></td>
+        <td></td>
+        <td id="tax">$8</td>
+    </tr>
+
+    <tr>
+        <td>Total</td>
+        <td></td>
+        <td></td>
+        <td id="total">$88</td>
+    </tr>
+    </table>
+
+    <h3>Shipping & handling</h3>
+    <!-- if we were using the funtion we would include this is the input tag -- onClick = "myFunction(this.value)"-->
+    <input type="radio" name="delivery" value="15" id = "NextDay" > Next-Day Delivery: $15.00<br>
+    <input type="radio" name="delivery" value="10" id = "ThreeDay"> Three-Day Delivery: $10.00<br>
+    <input type="radio" name="delivery" value="5" id = "Regular"> Regular Shipping (5-8 Days): $5.00<br>
+    <div id = "shippingError"></div><br>
+    <input type="checkbox" id="terms" name="terms">
+    <span id="termsMessage" >I accept the terms of this purchase.</span>
+
+    <br><br>
+
+    <input type="submit" value="CONFIRM PURCHASE" id = "purchaseButton"/>
+    
+    <script>
+    /*global $*/
+        let totalItem1 = 30;
+        let num1Items = $("#qty_item1").val();
+        let totalItem2 = 40;
+        let num2Items = $("#qty_item2").val();
+        let shipping = 10;
+        let subtotal = shipping + totalItem1 + totalItem2;
+        let tax = subtotal * .1;
+        let total = 0;
+        let noRadio = true;
+        let shippingMethod = "";
+        $("input[name=delivery]:checked").val();
+        
+        //item 1
+        $("#qty_item1").on("change", function(){
+            num1Items = $("#qty_item1").val();
+            totalItem1 = num1Items * 30;
+            print();
+        });
+        //item 2
+        $("#qty_item2").on("change", function(){
+            num2Items = $("#qty_item2").val();
+            totalItem2 = num2Items * 20;
+            print();
+        });
+        //shipping
+        $("input[name=delivery]").on("click", function(){
+            // if we wanted to compate the value that was clicked to something we could do this
+            // let shippingMethod = $("input[name=delivery]:checked").val(); 
+            // but we can also just check if a certain radio was clicked
+            if($("#NextDay").is(":checked")){
+                shipping = 15;
+                $("#shippingCost").html("$" + shipping);
+                noRadio = false;
+            }
+            else if($("#ThreeDay").is(":checked")){
+                shipping = 10;
+                $("#shippingCost").html("$" + shipping);
+                noRadio = false;
+            }
+            else if($("#Regular").is(":checked")){
+                shipping = 5;
+                $("#shippingCost").html("$" + shipping);
+                noRadio = false;
+            }
+            else{
+                noRadio = true;
+            }
+            print();
+        });
+        // this is another way to do the shipping stuff
+        // function myFunction(delivery){
+        //     $("#shippingCost").html("$" + delivery);
+        //     shipping = parseInt(delivery, 10);
+        //     subtotal = shipping + totalItem1 + totalItem2;
+        //     $("#subtotal").html("$" + subtotal);
+        //     tax = subtotal * .1;
+        //     $("#tax").html("$" + tax);
+        //     total = subtotal + tax;
+        //     $("#total").html("$" +  total);
+        // }
+        
+        $("#purchaseButton").on("click", function(){
+            if(noRadio){
+                $("#shippingError").html("No Shipping Method Selected!");
+                $("#shippingError").css("color", "red");
+            }
+        });
+        
+        function print(){
+            $("#totalItem1").html("$" + totalItem1);
+            $("#totalItem2").html("$" + totalItem2);
+            subtotal = shipping + totalItem1 + totalItem2;
+            $("#subtotal").html("$" + subtotal);
+            tax = subtotal * .1;
+            $("#tax").html("$" + tax);
+            total = subtotal + tax;
+            $("#total").html("$" +  total);
+        }
+        
+        
+        
+    </script>
+    
+</body>
+</html>

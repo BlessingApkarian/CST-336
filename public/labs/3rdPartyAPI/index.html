@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Third-Party API for Pixabay</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!--<link href="css/styles.css" rel="stylesheet" type="text/css" />-->
+    </head>
+    
+    <body>
+        <h1>Pixbay Image Search</h1>
+        
+        <p>
+            Keyword:     <input type = "text"  id = "keyword"><br>
+            Orientation: <select id = "orientation">
+                            <option value = ""> Select One </option>
+                            <option value = "v"> Vertical </option>
+                            <option value = "h"> Horizontal </option>
+                         </select> 
+                         <button id = "search"> Search </button>
+        </p>
+        
+        <script>
+            /* global $ */
+        
+            $("#search").on("click", function(){
+                $.ajax({
+                    method:   "GET",
+                    url:      "https://pixabay.com/api/?key=13831305-9f92b8a7ac4afa4517ea647bb&q=keyword",
+                    dataType: "json",
+                    data:   { "keyword": $("#keyword").val()},
+                    success: function(result,status){
+                        
+                    }
+                });
+            });
+            
+        </script>
+
+    </body>
+</html>

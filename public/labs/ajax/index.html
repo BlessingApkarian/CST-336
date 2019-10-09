@@ -23,8 +23,7 @@
                 Latitude:       <span  id = "latitude"></span><br>
                 Longitude:      <span  id = "longitude"></span><br><br>
                 
-                State: 
-                <select id = "state" name = "state"></select><br />
+                State:           <select id = "state" name = "state"></select><br />
                 
                 Select a County: <select id = "county"></select><br><br>
                 
@@ -57,8 +56,7 @@
                     dataType: "json",
                     data:   { "zip": $("#zip").val()},
                     success: function(result,status) {
-                    
-                        //alert(result.city);
+                        // alert(result.city);
                         $("#city").html(result.city);
                         $("#latitude").html(result.latitude);
                         $("#longitude").html(result.longitude);
@@ -107,17 +105,17 @@
                     url:      "https://cst336.herokuapp.com/projects/api/usernamesAPI.php?username=eeny",
                     dataType: "json",
                     data:   { "username": $("#username").val()},
-                        success: function(result, status) {
-                            if(result.available){
-                                $("#usernameError").html("Usernmane is available");
-                                $("#usernameError").css("color", "green");
-                                usernameAvailable = true;
-                            } else {
-                                $("#usernameError").html("Username is unavailable!");
-                                $("#usernameError").css("color", "red");
-                                usernameAvailable = false;
-                            }
+                    success: function(result, status) {
+                        if(result.available){
+                            $("#usernameError").html("Usernmane is available");
+                            $("#usernameError").css("color", "green");
+                            usernameAvailable = true;
+                        } else {
+                            $("#usernameError").html("Username is unavailable!");
+                            $("#usernameError").css("color", "red");
+                            usernameAvailable = false;
                         }
+                    }
                 });// ajax
             }); // username
             
@@ -139,7 +137,7 @@
                         $("#usernameError").html("Username is required");
                         $("#usernameError").css("color", "red");
                     }
-                    if($("#password").length < 6){
+                    if($("#password").length < 7){
                         $("#passwordAgainError").html("Password length must be a minimum of 6 characters");
                         $("#passwordAgainError").css("color", "red");
                         isValid = false;

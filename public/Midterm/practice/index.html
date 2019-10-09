@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Practice Midterm</title>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+    <style>
+
+        tr, td{
+
+            border:1px gray solid;
+
+            text-align: right;
+
+            padding:5px;
+
+        }
+
+        body, th {
+
+            text-align: center;
+
+        }
+
+        table {
+
+            margin: 0 auto;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1 class="jumbotron"> End-of-Summer Sale! </h1>
+
+    <h2> Cart </h2>    
+
+    <table>
+
+    <tr>
+
+        <th>Product</th>
+
+        <th>Unit Price</th>
+
+        <th> Quantity </th>
+
+        <th>Total</th>
+
+    </tr>
+
+    <tr>
+
+        <td id = "item1"> </td>
+
+        <td> </td>
+
+        <td><input type="text" size="5"></td>
+
+        <td id = "cost1"> </td>
+
+    </tr>
+
+    <tr>
+
+        <td id = "item2"> </td>
+
+        <td> </td>
+
+        <td><input type="text" size="5"></td>
+
+        <td id = "cost2"> </td>
+
+    </tr>
+    
+    <tr>
+
+        <td>Discount</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td id = "discount"> -$0 </td>
+
+    </tr>
+
+   <tr>
+
+        <td>Shipping</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td id="shippingCost">$7</td>
+
+    </tr>    
+
+    <tr>
+
+        <td>Subtotal</td>
+
+        <td> </td>
+
+        <td> </td>
+
+        <td id = "subtotal">$225</td>   
+
+    </tr>             
+
+
+
+    <tr>
+
+        <td>Tax (10%)</td>
+
+        <td></td>
+
+        <td></td>
+
+        <td id="tax"> </td>       
+
+    </tr>
+
+      <tr>
+
+        <td>Total</td>
+
+        <td></td>
+
+        <td></td>
+
+        <td id="total">$225</td>
+
+    </tr>
+
+    </table>
+
+    <br><br>
+
+    <strong>Promo Code: </strong> <input type="text" id = "promoCode"> <button id = "applyButton">Apply</button>
+
+
+    <h3>Shipping & handling</h3>
+
+</body>
+
+</html>
+        <script>
+        /*global $ _ */
+        
+        let tempArr;
+        let item1Cost = 0;
+        let item2Cost = 0;
+        let shippingCost = 0;
+        let discount = 0;
+        let qty1 = 0;
+        let qty2 = 0;
+        let subtotal = item1Cost + item2Cost + shippingCost + discount;
+        
+        $(document).ready(function(){
+            $.ajax({
+                method:   "GET",
+                url:      "https://cst336.herokuapp.com/projects/api/promo_products.php",
+                dataType: "json",
+                success: function(result,status) {
+                    tempArr = result;
+                    tempArr = _.shuffle(tempArr);
+                    
+                    item1Cost = tempArr[0].price;
+                    item2Cost = tempArr[1].price;
+                    
+                    $("#applyButton").on("click", function(){
+                        $.ajax({
+                            method:   "GET",
+                            url:      "https://cst336.herokuapp.com/projects/api/promo_codes.php?promoCode=",
+                            dataType: "json",
+                            success: function(result, status){
+                                if(result.available){
+                                    $("#discount").html("-$" + $("#promoCode").val());
+                                    discount = $("#promoCode").val();
+                                    
+                                }
+                            }
+                        })
+                    });
+                    
+                    subtotal = item1Cost + item2Cost + shippingCost - discount;
+                    
+                    printValues();
+                    // $("#item1").html(tempArr[0].productName);
+                    // $("#cost1").html("$" + tempArr[0].price);
+                    
+                    // $("#item2").html(tempArr[1].productName);
+                    // $("#cost2").html("$" + tempArr[1].price);
+                    
+                } 
+            });// ajax
+        });
+        
+        function printValues(){
+            $("#item1").html(tempArr[0].productName);
+            $("#cost1").html("$" + tempArr[0].price);
+            
+            $("#item2").html(tempArr[1].productName);
+            $("#cost2").html("$" + tempArr[1].price);
+            
+            $("#subtotal").html("$" + subtotal)
+        }
+        
+        </script>
+    </body>
+</html>
