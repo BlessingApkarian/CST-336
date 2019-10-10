@@ -19,17 +19,27 @@
                          <button id = "search"> Search </button>
         </p>
         
+        <div id = "images"></div>
+            
+        
         <script>
             /* global $ */
         
             $("#search").on("click", function(){
                 $.ajax({
                     method:   "GET",
-                    url:      "https://pixabay.com/api/?key=13831305-9f92b8a7ac4afa4517ea647bb&q=keyword",
+                    url:      "https://pixabay.com/api/?",
                     dataType: "json",
-                    data:   { "keyword": $("#keyword").val()},
+                    data:   { "key" : "13831305-9f92b8a7ac4afa4517ea647bb",
+                              "q" : $("#keyword").val(),
+                              "orientation" : $("#orientation").val()
+                    },
                     success: function(result,status){
-                        
+                        alert("S"+ $("#keyword").val())
+                        $("#images").html(result.largeImageURL);
+                    },
+                    error: function(result,status){
+                        alert("E" + $("#keyword").val());
                     }
                 });
             });

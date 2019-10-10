@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Midterm - Youtube Video </title>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+        <style>
+            
+            div, button, video, a, span {
+              text-align: center;
+              align: center;
+              padding: 25px;
+            }
+            
+            button{
+                padding: 10px;
+            }
+            
+            button > img{
+                width: 20px;
+                height: 20px;
+            }
+            
+            #question, #answers{
+                display: none;
+            }
+            
+            .right_answer{
+                background-color: green;
+                color: white;
+                width: 220px;
+            }
+            .wrong_answer{
+                background-color: red;
+                color: white;
+                width: 220px;
+            }
+        </style>
+    </head>
+    <body class  = "flex-container">
+        
+        <video id = "video"></video>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/_zz8tyRHKZY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <br>
+        <button id = "seeComments"> See Comments </button>
+        
+        <button id = "answerQ"> Answer Question </button>
+        
+        <button id = "blueLike"><img src = "img/like.png" alt = "likeButton" id = "likeButton"></button>
+        
+        <button id = "grayLike"><img src = "img/gray-like.png" alt = "cancellikeButton" id = "cancellikeButton"></button>
+        
+        <a id = "likeCounter"></a>
+        
+        <button id = "blueDislike"><img src = "img/dislike.png" alt = "likeButton" id = "likeButton"></button>
+        
+        <button id = "grayDislike"><img src = "img/gray-dislike.png" alt = "cancelDislikeButton" id = "cancelDislikeButton"></button>
+        
+        <a id = "dislikeCounter"></a>
+        <br>
+        <b id = "question"> What is this Video about? </b>
+        <select id = "answers">
+            <option value = ""> Select </option>
+            <option value = "Marbles"> Marbles being a marble </option>
+            <option value = "Kermit"> Kermit being NASTY </option>
+            <option value = "Jenna"> Jenna taking a nap (or trying) </option>
+            <option value = "Peach"> Peach being a good girl </option>
+            <option value = "Bunny"> Bunny eating </option>
+        </select>
+        <br>
+        <div id = "qfeedback"></div>
+        
+        <span id = "commentBox"></span>
+        
+        
+        <script>
+        
+            let likeCounter = 0;
+            let dislikeCounter = 0;
+        
+            $.ajax({
+                method:   "GET",
+                url:      "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=_zz8tyRHKZY",
+                dataType: "json",
+                success: function(result,status){
+                    // alert("S");
+                    $("#likeCounter").html(result.likes);
+                    $("#dislikeCounter").html(result.dislikes);
+                    likeCounter = parseInt(result.likes);
+                    dislikeCounter = parseInt(result.dislikes);
+                    
+                    $("#blueLike").on("click", function(){
+                        $.ajax({
+                            method:     "GET",
+                            url:        "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=_zz8tyRHKZY&action=action",
+                            datatype:   "json",
+                            success: function(){
+                                likeCounter += 1;
+                                $("#likeCounter").html(likeCounter);
+                            }
+                        });
+                    });
+                    
+                    $("#grayLike").on("click", function(){
+                        $.ajax({
+                            method:     "GET",
+                            url:        "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=_zz8tyRHKZY&action=action",
+                            datatype:   "json",
+                            success: function(){
+                                likeCounter -= 1;
+                                $("#likeCounter").html(likeCounter);
+                            }
+                        });
+                    });
+                    
+                    $("#blueDislike").on("click", function(){
+                        $.ajax({
+                            method:     "GET",
+                            url:        "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=_zz8tyRHKZY&action=action",
+                            datatype:   "json",
+                            success: function(){
+                                dislikeCounter += 1;
+                                $("#dislikeCounter").html(dislikeCounter);
+                            }
+                        });
+                    });
+                    
+                    $("#grayDislike").on("click", function(){
+                        $.ajax({
+                            method:     "GET",
+                            url:        "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=_zz8tyRHKZY&action=action",
+                            datatype:   "json",
+                            success: function(){
+                                dislikeCounter -= 1;
+                                $("#dislikeCounter").html(dislikeCounter);
+                            }
+                        });
+                    });
+                    
+                    //this isnt working!!!! AAAAAAAHHHHH
+                    $("#seeComments").on("click", function(){
+                        $.ajax({
+                            method:     "GET",
+                            url:        "https://cst336.herokuapp.com/projects/api/videoLikesAPI.php?videoId=xyz&action=comments",
+                            datatype:   "json",
+                            success: function(result,status){
+                                arr = result;
+                                arr = _.shuffle(arr);
+                                
+                                // alert(result[0].author);
+                                
+                                $("#commentBox").html(result[0].author);
+                                
+                                // for(let i = 0; i < 5; i++){
+                                //     // alert(arr[i].comment);
+                                //     $("#commentBox").append(arr[i].comment);
+                                // }
+                            }
+                        });
+                    });
+                    
+                    let answer = "Jenna";
+                    let userGuess = $("#answers");
+                    
+                    $("#answerQ").on("click", function(){
+                        $("#answers").css("display", "block");
+                        $("#question").css("display", "block");
+                        $("#answers").on("change", function(){
+                            if(userGuess.val() == answer){
+                                $("#qfeedback").html("Correct Beeeeach! Hell Yeah!");
+                                $("#qfeedback").attr("class", "right_answer");
+                            }else{
+                                $("#qfeedback").html("Hell Nah Beach! NASTY!");
+                                $("#qfeedback").attr("class", "wrong_answer");
+                            }
+                        })
+                        
+                    });
+                    
+                }
+                
+            });
+                
+        </script>
+        
+        
+        
+        <br><br>
+        <div id="rubricDiv">   
+          <table border="1" width="600" cellpadding="10px">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Task Description</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="color:green">
+                <td>1</td>
+                <td>All elements are included (video and buttons)<br></td>
+                <td width="20" align="center">10</td>
+              </tr>     
+              <tr style="color:green">
+                <td>2</td>
+                <td>Initial number of likes/dislikes is displayed from API when loading page<br></td>
+                <td width="20" align="center">10</td>
+              </tr>     
+              <tr style="color:red">
+                <td>3</td>
+                <td>When clicking on any like/dislike button, it's hidden and the other blue/grayedout button is displayed <br></td>
+                <td width="20" align="center">10</td>
+              </tr>     
+              <tr style="color:green">
+                <td>4</td>
+                <td>When clicking on any like/dislike button, the corresponding value is updated via an AJAX call <br></td>
+                <td width="20" align="center">20</td>
+              </tr>     
+              <tr style="color:red">
+                <td>5</td>
+                <td>When clicking on "See Comments", author, date, and comment are displayed via AJAX in the following format: <br> <b>Author</b> <i>Date</i><br>Comment<br></td>
+                <td width="20" align="center">20</td>
+              </tr>     
+              <tr style="color:red">
+                <td>6</td>
+                <td>When clicking on "See Comments", comments are in random order<br></td>
+                <td width="20" align="center">10</td>
+              </tr>
+              <tr style="color:red">
+                <td>7</td>
+                <td>When clicking on "See Comments", stars are displayed based on the RATING value<br></td>
+                <td width="20" align="center">10</td>
+              </tr>
+              <tr style="color:green">
+                <td>8</td>
+                <td>When clicking on "Answer Question" a dropdown question is displayed <br></td>
+                <td width="20" align="center">5</td>
+              </tr>    
+              <tr style="color:green">
+                <td>9</td>
+                <td>When answering the question, color-coded feedback is displayed <br></td>
+                <td width="20" align="center">15</td>
+              </tr>    
+              <tr style="color:red">
+                <td>10</td>
+                <td>Page has nice design: content is centered, all buttons right below the video <br></td>
+                <td width="20" align="center">10</td>
+              </tr>
+              <tr style="color:green">
+                <td>11</td>
+                <td>This rubric is properly included AND UPDATED</td>
+                <td width="20" align="center">3</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>T O T A L </td>
+                <td width="20" align="center">&nbsp;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+    </body>
+</html>

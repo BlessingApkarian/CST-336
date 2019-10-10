@@ -59,9 +59,9 @@
 
         <td id = "item1"> </td>
 
-        <td> </td>
+        <td id = "unitPrice1"> </td>
 
-        <td><input type="text" size="5"></td>
+        <td><input id = "qty1" type="text" size="5"></td>
 
         <td id = "cost1"> </td>
 
@@ -71,9 +71,9 @@
 
         <td id = "item2"> </td>
 
-        <td> </td>
+        <td id = "unitPrice2"> </td>
 
-        <td><input type="text" size="5"></td>
+        <td><input id = "qty2" type="text" size="5"></td>
 
         <td id = "cost2"> </td>
 
@@ -83,7 +83,7 @@
 
         <td>Discount</td>
 
-        <td> </td>
+        <td id = "discountPercent"> </td>
 
         <td> </td>
 
@@ -99,7 +99,7 @@
 
         <td> </td>
 
-        <td id="shippingCost">$7</td>
+        <td id="shippingCost">Select</td>
 
     </tr>    
 
@@ -111,7 +111,7 @@
 
         <td> </td>
 
-        <td id = "subtotal">$225</td>   
+        <td id = "subtotal"></td>   
 
     </tr>             
 
@@ -137,7 +137,7 @@
 
         <td></td>
 
-        <td id="total">$225</td>
+        <td id="total"></td>
 
     </tr>
 
@@ -146,9 +146,12 @@
     <br><br>
 
     <strong>Promo Code: </strong> <input type="text" id = "promoCode"> <button id = "applyButton">Apply</button>
-
+    <b id = "promoError"></b>
 
     <h3>Shipping & handling</h3>
+    <input type="radio" name="delivery" value="25" id = "NextDay" > Next-Day Delivery: $25.00<br>
+    <input type="radio" name="delivery" value="20" id = "ThreeDay"> Three-Day Delivery: $20.00<br>
+    <input type="radio" name="delivery" value="7" id = "Regular"> Regular Shipping (5-8 Days): $7.00<br>
 
 </body>
 
@@ -159,11 +162,16 @@
         let tempArr;
         let item1Cost = 0;
         let item2Cost = 0;
+        let unitPrice1 = 0;
+        let unitPrice2 = 0;
         let shippingCost = 0;
         let discount = 0;
+        let tax = .1;
         let qty1 = 0;
         let qty2 = 0;
+        let noRadio = true;
         let subtotal = item1Cost + item2Cost + shippingCost + discount;
+        let total = subtotal + tax;
         
         $(document).ready(function(){
             $.ajax({
@@ -174,45 +182,98 @@
                     tempArr = result;
                     tempArr = _.shuffle(tempArr);
                     
-                    item1Cost = tempArr[0].price;
-                    item2Cost = tempArr[1].price;
+                    unitPrice1 = tempArr[0].price;
+                    unitPrice2 = tempArr[1].price;
                     
+                    $("#qty1").val(tempArr[0].qty);
+                    $("#qty2").val(tempArr[1].qty);
+                    
+                    qty1 = $("#qty1").val();
+                    qty2 = $("#qty2").val();
+                    
+                    item1Cost = unitPrice1 * qty1;
+                    item2Cost = unitPrice2 * qty2;
+                    
+                    $("#qty1").on("change", function(){
+                        qty1 = $("#qty1").val();
+                        item1Cost = unitPrice1 * qty1;
+                        printValues();
+                    })
+                    
+                    $("#qty2").on("change", function(){
+                        qty2 = $("#qty2").val();
+                        item2Cost = unitPrice2 * qty2;
+                        printValues();
+                    })
+                
                     $("#applyButton").on("click", function(){
                         $.ajax({
                             method:   "GET",
                             url:      "https://cst336.herokuapp.com/projects/api/promo_codes.php?promoCode=",
                             dataType: "json",
+                            data:     {"promoCode" : $("#promoCode").val()},
                             success: function(result, status){
-                                if(result.available){
-                                    $("#discount").html("-$" + $("#promoCode").val());
-                                    discount = $("#promoCode").val();
-                                    
+                                if(result){
+                                    discount = subtotal * result.discount/100;
+                                    $("#discount").html("-$" + discount);
+                                    $("#discountPercent").html(result.discount + "%");
+                                    printValues();
                                 }
+                                else {
+                                    $("#promoError").css("color", "red");
+                                    $("#promoError").html("No Promo Code Exists!");
+                                    printValues();
+                                }
+                                
                             }
                         })
                     });
                     
-                    subtotal = item1Cost + item2Cost + shippingCost - discount;
+                    $("input[name=delivery]").on("click", function(){
+                        if($("#NextDay").is(":checked")){
+                            shippingCost = 25;
+                            $("#shippingCost").html("$" + shippingCost);
+                            noRadio = false;
+                        }
+                        else if($("#ThreeDay").is(":checked")){
+                            shippingCost = 20;
+                            $("#shippingCost").html("$" + shippingCost);
+                            noRadio = false;
+                        }
+                        else if($("#Regular").is(":checked")){
+                            shippingCost = 7;
+                            $("#shippingCost").html("$" + shippingCost);
+                            noRadio = false;
+                        }
+                        else{
+                            noRadio = true;
+                        }
+                        printValues();
+                    });
                     
                     printValues();
-                    // $("#item1").html(tempArr[0].productName);
-                    // $("#cost1").html("$" + tempArr[0].price);
-                    
-                    // $("#item2").html(tempArr[1].productName);
-                    // $("#cost2").html("$" + tempArr[1].price);
-                    
                 } 
             });// ajax
         });
         
         function printValues(){
+            subtotal = item1Cost + item2Cost + shippingCost - discount;
+            total = subtotal + tax;
+            
             $("#item1").html(tempArr[0].productName);
-            $("#cost1").html("$" + tempArr[0].price);
+            $("#unitPrice1").html("$" + unitPrice1);
+            $("#qty1").html(qty1);
+            $("#cost1").html("$" + item1Cost);
             
             $("#item2").html(tempArr[1].productName);
-            $("#cost2").html("$" + tempArr[1].price);
+            $("#unitPrice2").html("$" + unitPrice2);
+            $("#qty2").html(qty2);
+            $("#cost2").html("$" + item2Cost);
             
-            $("#subtotal").html("$" + subtotal)
+            $("#tax").html("$" + tax * subtotal);
+            
+            $("#subtotal").html("$" + subtotal);
+            $("#total").html("$" + total);
         }
         
         </script>
