@@ -4,23 +4,65 @@
         <title>Third-Party API for Pixabay</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!--<link href="css/styles.css" rel="stylesheet" type="text/css" />-->
+        
+        <style>
+            .flex-container{
+                padding: 20px;
+                text-align: center;
+            }
+            .imageSize{
+                display: flex;
+                justify-content: center;
+            }
+            .imageSize > div > div > img{
+                max-height: 2500px;
+                max-width: 250px;
+            }
+            .imageSize > div{
+                padding: 10px;
+            }
+            .thing{
+                background-color: lightblue;
+                font-family: Verdana;
+            }
+        </style>
+        
     </head>
     
-    <body>
-        <h1>Pixbay Image Search</h1>
+    <body class = "flex-container">
+        <div class = "thing">
+            <h1>Pixbay Image Search</h1>
         
-        <p>
-            Keyword:     <input type = "text"  id = "keyword"><br>
-            Orientation: <select id = "orientation">
-                            <option value = ""> Select One </option>
-                            <option value = "v"> Vertical </option>
-                            <option value = "h"> Horizontal </option>
-                         </select> 
-                         <button id = "search"> Search </button>
-        </p>
-        
-        <div id = "images"></div>
+            <p>
+                Keyword:     <input type = "text"  id = "keyword"><br>
+                Orientation: <select id = "orientation">
+                                <option value = ""> Select One </option>
+                                <option value = "vertical"> Vertical </option>
+                                <option value = "horizontal"> Horizontal </option>
+                             </select> 
+                             <button id = "search"> Search </button>
+            </p>
+            <hr>
+        </div>
             
+        <div class = "imageSize">
+            <div>
+                <div id = "likes1"></div>
+                <div id = "image1"></div>
+            </div>
+            <div>
+                <div id = "likes2"></div>
+                <div id = "image2"></div>
+            </div>
+            <div>
+                <div id = "likes3"></div>
+                <div id = "image3"></div>
+            </div>
+            <div>
+                <div id = "likes4"></div>
+                <div id = "image4"></div>
+            </div>
+        </div>
         
         <script>
             /* global $ */
@@ -28,18 +70,18 @@
             $("#search").on("click", function(){
                 $.ajax({
                     method:   "GET",
-                    url:      "https://pixabay.com/api/?",
+                    url:      "https://pixabay.com/api/",
                     dataType: "json",
                     data:   { "key" : "13831305-9f92b8a7ac4afa4517ea647bb",
                               "q" : $("#keyword").val(),
                               "orientation" : $("#orientation").val()
                     },
                     success: function(result,status){
-                        alert("S"+ $("#keyword").val())
-                        $("#images").html(result.largeImageURL);
-                    },
-                    error: function(result,status){
-                        alert("E" + $("#keyword").val());
+                        // alert(result.hits[0].webformatURL)
+                        for(let i = 0; i < 4; i++){
+                            $(`#image${i+1}`).html(`<img src = ${result.hits[i].webformatURL} id = "image${i+1}">`);
+                            $(`#likes${i+1}`).html("Likes: " + result.hits[i].likes);
+                        }
                     }
                 });
             });
