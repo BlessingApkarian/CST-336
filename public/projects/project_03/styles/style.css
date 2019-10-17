@@ -1,0 +1,12 @@
+.centerStuff{
+    display: flex;
+    height: 100%;
+    margin: 100px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.centerStuff > gender, language, ul{
+    color: white;
+}
