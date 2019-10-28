@@ -1,0 +1,24 @@
+body{
+    background-color: #000000;
+    text-align: center;
+}
+
+p{
+    color: white;
+}
+
+h1{
+    color: white;
+}
+
+a{
+    color: white;
+}
+
+#solarSystem{
+    width: 100%;
+}
+
+#text{
+    color: white;
+}
