@@ -1,0 +1,54 @@
+<% include partials/header.ejs %>
+    <header> 
+        <h1>Callbacks</h1>
+    </header>
+    
+    <nav>
+        <hr>
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Concepts</a>
+        <a href="callback.html">Callbacks</a>
+        <a href="instances.html">Instances</a>
+    </nav>
+    
+    <main class = "flex-container">
+        <img src = "img/activity_lifecycle.png" alt = "Activity Lifecycle"/>
+            
+        <div id = "scroll">
+            
+            <h3>.onCreate()</h3>
+            <p>This callback must be implemented. It is activated when an app is opened. Once used, the app enters the <i>Created.</i>
+            Inside .onCreate() your code is basic application startup logic that should occur only once for the entire life of the activity. 
+            For example, during implementation of onCreate(), you might: 
+            <li>bind data to lists</li> 
+            <li>associate the activity with a ViewModel</li> 
+            <li>instantiate some class-scope variables</li>
+            
+            <h3>.onDestroy()</h3>
+            <p>This callback is called before the activity is destroyed. The system invokes this callback either because:
+            <li>the activity is finishing (due to the user completely dismissing the activity or due to finish() being called on the activity)</li>
+            <li>the system is temporarily destroying the activity due to a configuration change (such as device rotation or multi-window mode)</li>
+            <br />
+            <p>This is where the lifecycle components can clean up anything it needs to before the Activity is destroyed.</p>
+            
+            <h3>.onStart()</h3>
+            <p>After the system is done entering <i>Created</i> it enters the <i>Started</i> state. The .onStart() method 
+            call makes the activity visible to the user, as the app prepares for the activity to enter the foreground and become interactive.</p>
+            
+            <h3>.onStop()</h3>
+            <p>When your activity is no longer visible to the user, it has entered the <i>Stopped</i> state caused by the .onStop() method.
+            This is when the app stops evrything to spare resources.</p>
+            
+            <h3>.onPause()</h3>
+            <p>This callback is made when the user first leaves the activity. The app is no longer in the foreground. It may still be visible, however, if the user goes into
+            the multi-window mode. Like in .onStop(), it pauses some functions and operations to save resources.</p>
+            
+            <h3>.onResume()</h3>
+            <p>This method is invoked when the app comes out of the <i>Paused State</i> or <i>Started Sate</i>. Suring this 
+            lifecycle, any functionality the app contains is active.</p>
+                
+            <p>You can find examples of these callbacks at <a href = "https://developer.android.com/guide/components/activities/activity-lifecycle">Android Developers</a></p>
+        
+        </div>
+    </main>
+<% include partials/footer.ejs %>

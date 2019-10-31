@@ -1,0 +1,26 @@
+<script>
+    // given a first middle and last name
+    // return a full name
+    
+    // function getFullName(first,middle,last){
+    //     let fullName = first+middle+last
+    //     //simulate something that takes a long time
+    //     // for(let i - 0; i < 1000000; i++) { }
+    //     return fullName
+    // }
+    
+    // let fullName = getFullName("Blessing","Ariel","Apkarian")
+    
+    function jumbleString(something){ // create function to call
+        console.log("This is the string normal", something)
+        var ans = ''; 
+            for (var i = something.length; i > 0; i--) { 
+                ans += something[Math.floor(Math.random() * something.length)]; 
+            } 
+        console.log("This is the string randomized", ans)
+        return ans; 
+    }
+    
+    jumbleString("string") // call function (then go to routes/exercise/router.js)
+    
+</script>

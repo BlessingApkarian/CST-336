@@ -1,0 +1,61 @@
+<h1>{{title}}</h1>
+<hr />
+{{message}}
+
+<script>
+//     // Given a first, middle and last name, 
+//     // return a full name
+//     ////////////////////////////////////////////////////////////
+//     // 1. "Normal" function
+//     ////////////////////////////////////////////////////////////
+//     function getFullNameSync(first, middle, last) {
+//         console.log('starting get of full name...(sync, return)');
+//         let fullName = first + " " + middle + " " + last;
+//         console.log('doing long operation...(sync, return)');
+//         // Simulate something that takes a long time
+//         for (let i = 0; i < 1000000000; i++) {}
+//         console.log('done with operation. (sync, return)');
+//         return fullName;
+//     }
+//     console.log('getting full name (sync, return)...');
+//     let fullName = getFullNameSync('John', 'Adam', 'Smith');
+//     console.log('(sync, return) full name is', fullName);
+//     ////////////////////////////////////////////////////////////
+//     // 2. Pass "by reference" by passing in an object that can be modified
+//     ////////////////////////////////////////////////////////////
+//     function getFullNameSyncByRef(first, middle, last, output) {
+//         console.log('starting get of full name...(sync, by ref)');
+//         let fullName = first + " " + middle + " " + last;
+//         console.log('doing long operation...(sync, by ref)');
+//         // Simulate something that takes a long time
+//         for (let i = 0; i < 1000000000; i++) {}
+//         console.log('done with (sync, by ref) operation.');
+//         if (output) {
+//             output.value = fullName;
+//         }
+//     }
+//     console.log('getting full name (sync, by ref)...');
+//     let data = {};
+//     getFullNameSyncByRef('John', 'Adam', 'Smith', data);
+//     console.log('(sync, by ref) full name is', data.value);
+    
+//     ////////////////////////////////////////////////////////////
+//     // 3. Pass values back using a "callback"
+//     ////////////////////////////////////////////////////////////
+//     function getFullNameAsync(first, middle, last, done) {
+//         console.log('starting get of full name...(async, callback)');
+//         let fullName = first + " " + middle + " " + last;
+//         console.log('doing long operation...(async, callback)');
+//         // Simulate something that takes a long time
+//         //for (let i = 0; i < 1000000000; i++) {}
+//         console.log('done with (async, callback) operation.');
+//         if (done) {
+//             done(fullName);
+//         }
+//     }
+//     console.log('getting full name (async, callback)...');
+//     getFullNameAsync('John', 'Adam', 'Smith', function(fullName) {
+//         console.log('(async, callback) full name is', fullName);
+//     });
+//     console.log('(async, callback) called');
+</script>

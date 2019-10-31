@@ -1,0 +1,32 @@
+<% include partials/header.ejs %>
+    <header>
+        <h1>Instances</h1>
+    </header>
+    
+    <nav>
+        <hr>
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Concepts</a>
+        <a href="callback.html">Callbacks</a>
+        <a href="instances.html">Instances</a>
+    </nav>
+    
+    <main class = "flex-container">
+       <img id = "roundImage" src = "img/Java-logo.jpg" alt = "Java logo" />
+        
+        
+        <div id = "oof">
+            Sometimes your activity enters destroyed due to normal app behavior, 
+            such as when the user presses the Back button or your activity signals its own destruction. 
+            In these scenarios, the user's expectation matches the system's behavior and you do not have any extra work to do.
+            <br /><br />
+            If something causes the app to crash, the system remebers the activity existed 
+            even though the activity instance is gone. Once the user navigated back to the activity
+            the system creates a new instance with the details of the activity before it was destroyed.
+            <br /><br />
+            This saved data is called the <i>instance state</i>. The instance state is a collection of "key-value pairs"
+            stored in a Bundel object. This saves the info in each view, such as a text value entered in a EditText box.
+            Threrefore, no extra coding is required to save user data.
+        </div>
+    </main>
+<% include partials/footer.ejs %>

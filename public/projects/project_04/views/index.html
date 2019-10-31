@@ -1,0 +1,51 @@
+<% include partials/header.ejs %>
+    <header>
+        <h1>Android Lifecycles</h1>
+    </header>
+    
+    <nav>
+        <hr>
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Concepts</a>
+        <a href="callback.html">Callbacks</a>
+        <a href="instances.html">Instances</a>
+    </nav>
+    
+    <main class = "flex-container">
+        <figure>
+            <img src = "img/Android_symbol.png" alt = "Android logo"/>
+        </figure>
+        
+        <div id = "oof">
+            
+            When a user is running an app, there are three navigations they can make:
+            <ul>
+                <li>enter the app</li>
+                <li>through the app</li>
+                <li>exit the app</li>
+            </ul>
+            While navigating the app, the user triggers the lifecycles. Lifecycles are moved through by Activity classes (or instances).
+            Each navigation listed above can allude to three stages of an Activity instance: 
+            <ul>
+                <li>Activity Launched</li>
+                <li>Activity Running</li>
+                <li>Activity Shut Down</li>
+            </ul>
+            There are a set of six callbacks that Activities provide mentioned in the "<a href="concepts.html">Concepts</a>" page. 
+            To summerize, when a user opens an app there are three callbacks activated before the app begins running. 
+            Once the app is running, it is using some amount of memory. If many apps are open on a device, this could lead to a 
+            heaping amount of memory useage. To prevent issues, there is a callback for pausing this usage while an app is 
+            hanging out it the background. Only if the app is in use, with some exceptions, is it using memory. 
+            There are two callbacks that are on stand-by and depending on the users actions, each one is called.
+            When the user closes the app, the app dismantles the memory used.
+            <br />
+            For example, good implementation of the lifecycle callbacks can help ensure that your app avoids:
+            <ul>
+                <li>Crashing if the user receives a phone call or switches to another app while using your app.</li>
+                <li>Consuming valuable system resources when the user is not actively using it.</li>
+                <li>Losing the user's progress if they leave your app and return to it at a later time.</li>
+                <li>Crashing or losing the user's progress when the screen rotates between landscape and portrait orientation.</li>
+            </ul>
+        </div> 
+    </main>
+<% include partials/footer.ejs %>

@@ -1,0 +1,23 @@
+{
+  "name": "project_04",
+  "version": "1.0.0",
+  "description": "Redo of Project 1 using node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlessingApkarian/CST-336.git"
+  },
+  "author": "Blessing Apkarian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BlessingApkarian/CST-336/issues"
+  },
+  "homepage": "https://github.com/BlessingApkarian/CST-336#readme",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1"
+  }
+}

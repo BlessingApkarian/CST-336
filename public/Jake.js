@@ -1,8 +1,13 @@
+// JavaScript File
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var jakeRouter  = require('./routes/ourApp');
 
 var app = express();
 
@@ -16,14 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var promiseRouter = require('./routes/exercise/router'); // create router then check if it works by running the app
-// attach "/exercise/promises" to the end of the URL
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/exercise', promiseRouter); // calling it
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+app.use('/', jakeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,3 +42,24 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// Solution:
+// $.ajax({
+//     type: "post",
+//     url: "/exercises/routing/add", // Need /add as parameter
+//     dataType: "json",
+//     data: {
+//         "timestamp": (new Date()).getMilliseconds(),
+//         "username": "JimmyD1978",
+//         "messages": ['this is a test message', 'another one']
+//     },
+//     success: function(data, status) {
+//         console.log('good data back', data)
+//     },
+//     error: function(xhr, status, description) {
+//         console.log('no good', description);
+//     },
+//     complete: function(data, status) { 
+//         console.log('called no matter what');
+//     }
+// });
