@@ -20,10 +20,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var promiseRouter = require('./routes/exercise/router'); // create router then check if it works by running the app
 // attach "/exercise/promises" to the end of the URL
+var labrouter = require('./routes/lab7route');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/exercise', promiseRouter); // calling it
+app.use('/lab7', labrouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
