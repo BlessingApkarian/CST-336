@@ -1,0 +1,28 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<hr/>
+<p>The answer {{answer}}</p>
+
+<form>
+
+    <input type = "text" id = "login" class = "fadeIn second" name = "login" placeholder = "login">
+    <input type = "text" id = "password" class = "fadeIn second" name = "login" placeholder = "password">
+    <button id = "loginButton"></button>
+    
+    <script>
+        
+        $(function(){
+            
+            $("#loginButton").on("click", function(e){
+                e.preventDefault();
+            
+                $.ajax({
+                    
+                });
+            });
+            
+        })
+        
+    </script>
+    
+</form>

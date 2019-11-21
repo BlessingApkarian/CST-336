@@ -28,40 +28,63 @@
     </head>
     <body class = "text-center">
         
-        <header class = "d-flex justify-content-center p-5 bg-light">
-            
-            <h1>US Geography Quiz</h1>
-            
-        </header>
+        <h1 class="jumbotron"> US Geography Quiz <br> Express Version </h1>
         
-        <main class = "bg_info p-5">
-            
-            <!--<img src = "img/checkmark.png" class = "hide_when_loaded" />-->
-            <!--<img src = "img/xmark.png" class = "hide_when_loaded" />-->
-            
-            <h3 class = "m-1"> What is the capital of California? </h3>
-            <br>
-            <input type = "text" id = "q1" class = "m-1">
-            <br><br>
-            <div id = "q1Feedback"></div>
-            <br><br>
-            
-            <h3><span id = "m-1"></span> What is the longest River? </h3>
-            <select id = "q2">
-                <option value = ""> Select One </option>
-                <option value = "ms"> Mississippi </option>
-                <option value = "mo"> Missouri </option>
-                <option value = "co"> Colorado </option>
-                <option value = "de"> Delaware </option>
-            </select>
-            <br><br>
-            <div id = "q2Feedback"></div>
-            <br>
-            
-            <h3 id = "validationFdbk" class = "bg-danger text-white"></h3>
-            <button class = "btn btn-outline-success m-1">Submit Quiz</button>
-            <br>
-            <h2 id = "totalScore" class = "text-info"></h2>
+        <h3><span id="markImg1"></span> What is the capital of California?</h3>
+        <input type="text" id="q1">
+        <br><br>
+        <div id="q1Feedback"></div>
+        <br>
+        
+        <h3><span id="markImg2"></span>What is the longest river?</h3>
+        <select id="q2">
+            <option value="">Select One</option>
+            <option value="ms">Mississippi</option>
+            <option value="mo">Missouri</option>
+            <option value="co">Colorado</option>
+            <option value="de">Delaware</option>
+        </select>
+        <br><br>
+        <div id="q2Feedback"></div>
+        <br>
+        
+        <h3><span id="markImg3"></span>What presidents are carved into mount Rushmore?</h3>
+        <input type="checkbox" id="Jackson">   <label for="Jackson"> A. Jackson    </label>
+        <input type="checkbox" id="Franklin">  <label for="Franklin">B. Franklin  </label>
+        <input type="checkbox" id="Jefferson"> <label for="Jefferson">T. Jefferson</label>
+        <input type="checkbox" id="Roosevelt"> <label for="Roosevelt">T. Roosevelt</label>
+        <br><br>
+        <div id="q3Feedback"></div>
+        <br>
+        
+        <h3><span id="markImg4"></span>What is the smallest US state?</h3>
+        <div id="choices">
+            <input type="radio" name="q4" id="Delaware" value="Delaware"> 
+            <label for="Delaware"> Delaware</label> 
+            <input type="radio" name="q4" id="Maine" value="Maine"> 
+            <label for="Maine"> Maine</label> 
+            <input type="radio" name="q4" id="Rhode-Island" value="Rhode-Island"> 
+            <label for="Rhode-Island"> Rhode-Island</label> 
+            <input type="radio" name="q4" id="Maryland" value="Maryland"> 
+            <label for="Maryland"> Maryland</label>
+        </div>
+        <br><br>
+        <div id="q4Feedback"></div>
+        <br>
+        
+        <h3><span id="markImg5"></span>Which is the correct seal of California?</h3>
+        <img src="/img/seal1.png" alt= "seal1" class="q5choice" id="seal1">
+        <img src="/img/seal2.png" alt= "seal2" class="q5choice" id="seal2">
+        <img src="/img/seal3.png" alt= "seal3" class="q5choice" id="seal3">
+        
+        <br><br>
+        <div id="q5Feedback"></div>
+        <br>
+        
+        <button class="btn btn-outline-success submit"> Submit Quiz </button>
+        <br><br>
+        
+        <h2 id="totalScore" class="text-info"></h2>
         
         </main>
         
