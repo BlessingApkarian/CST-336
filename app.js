@@ -3,13 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var app = express();
-
 var session = require('express-session');
 
+const app = express();
+app.set("view engine", "ejs");
+app.use(express.static("public")); //folder for images, css, js
+app.use(express.urlencoded()); //use to parse data sent using the POST method
+app.use(session({ secret: 'any word', cookie: { maxAge: 60000 }}));
+
+
 // enable sessions
-var app = express()
+// var app = express()
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'keyboard cat'
@@ -31,12 +35,14 @@ var promiseRouter = require('./routes/exercise/router'); // create router then c
 // attach "/exercise/promises" to the end of the URL
 var mySQLrouter = require('./public/examples/mySQL/router');
 var lab9Router = require('./labs/9/router');
+var lab10Router = require('./labs/10/router');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/exercise', promiseRouter); // calling it
 app.use('/mysql', mySQLrouter);
 app.use('/labs/9', lab9Router);
+app.use('/labs/10', lab10Router);
 
 
 // catch 404 and forward to error handler

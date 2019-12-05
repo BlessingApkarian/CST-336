@@ -1,0 +1,35 @@
+<body>
+    
+    <h1> Update </h1>
+        <form method = "POST">
+            
+            First Name: <input type="text" name ="firstName" value="<%= author.firstName %>"><br> 
+            Last  Name: <input type="text" name="lastName" value="<%= author.lastName %>"><br> 
+            
+            Gender:
+            <select value="<%= author.sex %>">
+                <option name=" "> Select One </option>
+                <option name="F"> Female </option>
+                <option name="M"> Male </option>
+                <option name="O"> Other </option>
+            </select>
+            
+            <br>
+            
+            <input type="hidden" name="authorId" value="<%= author.authorId %>"> 
+                
+            <button> 
+                Confirm
+            </button>
+            
+            <%= typeof(message) != "undefined"?message:"" %>
+            
+        </form>
+        
+        <a href = "./authors">
+            <button>
+                Return
+            </button>
+        </a>
+        
+</body>

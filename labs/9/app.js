@@ -14,7 +14,7 @@ app.get("/", async function(req, res){
 });//root
 
 app.get("/quotes", async function(req, res){
-
+    // console.log("req.query", req.query);
   let rows = await getQuotes(req.query);
   res.render("quotes", {"records":rows});
 
@@ -37,8 +37,7 @@ function getAuthorInfo(authorId){
            console.log("Connected!");
         
            let sql = `SELECT * 
-                      FROM l9_author
-                      WHERE authorId = ${authorId}`;
+                      FROM l9_author`;
             console.log(sql);        
            conn.query(sql, function (err, rows, fields) {
               if (err) throw err;

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Add Author </title>
+    </head>
+    <body>
+
+        <h1> Adding a New Author </h1>
+
+        <form method="POST">
+        
+            First name: <input type="text" name="firstName"><br>    
+            Last  name: <input type="text" name="lastName"><br>    
+            Gender: <input type="radio" name="gender" value="F">Female
+                    <input type="radio" name="gender" value="M">Male
+            <!--TODO: Add the remaining fields -->
+            <br>
+            Biography: <textarea name="biography" cols="50" height="20"></textarea>
+            <br><br>
+            <button>Add Author</button>
+        
+            <%= typeof(message) != "undefined"?message:"" %>
+            
+        </form>  
+        
+        <a href = "./authors">
+            <button>
+                Return
+            </button>
+        </a>
+        
+    </body>
+</html>

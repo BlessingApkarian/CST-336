@@ -1,0 +1,41 @@
+<body>
+    <div>
+    
+        <h1> This is the Author Page </h1>
+    
+    </div>    
+    <% authorList.forEach( function(author){ %> <!--arr.forEach(function callback(currentValue[, index[, array]]) {}[, thisArg]);-->
+        
+        <i><%= author.quote %></i> <br>
+        <h2 id="<%= author.authorId %>">
+            <%= author.firstName %> <%= author.lastName %> <!--Shows the authors first and last name giving it the id of the authorId-->
+        </h2>
+        <a href="./update?authorId=<%= author.authorId %>"> <!--Takes to update page-->
+            <button> 
+                Update 
+            </button>
+        </a>
+        <br>
+        <a onclick="confirmDelete()" class="removeAuthor" href = "./deleteAuthor?authorId=<%= author.authorId %>"> 
+            <button>
+                Delete
+            </button> 
+        </a>
+        
+    <% })  %>
+    <br><br>
+    <a href = "./addAuthor"> 
+        <button>
+            Add Author
+        </button> 
+    </a>
+    
+</body>
+
+<script>
+    function confirmDelete() {
+        if (!confirm("Confirm Delete!")) {
+            event.preventDefault();
+        } 
+    }
+</script>
