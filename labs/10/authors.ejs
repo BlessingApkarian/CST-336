@@ -1,34 +1,76 @@
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body{
+            font-family: arial, sans-serif;
+        }
+        table {
+          width: 100%;
+        }
+        
+        td, th {
+          /*border: 1px solid #dddddd;*/
+          font-size: 40px;
+          text-align: left;
+          padding: 12px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+</head>
 <body>
     <div>
     
-        <h1> This is the Author Page </h1>
+        <h1><b>Author Page</b></h1>
     
-    </div>    
-    <% authorList.forEach( function(author){ %> <!--arr.forEach(function callback(currentValue[, index[, array]]) {}[, thisArg]);-->
-        
-        <i><%= author.quote %></i> <br>
-        <h2 id="<%= author.authorId %>">
-            <%= author.firstName %> <%= author.lastName %> <!--Shows the authors first and last name giving it the id of the authorId-->
-        </h2>
-        <a href="./update?authorId=<%= author.authorId %>"> <!--Takes to update page-->
-            <button> 
-                Update 
-            </button>
-        </a>
-        <br>
-        <a onclick="confirmDelete()" class="removeAuthor" href = "./deleteAuthor?authorId=<%= author.authorId %>"> 
-            <button>
-                Delete
-            </button> 
-        </a>
-        
-    <% })  %>
-    <br><br>
+    </div>   
     <a href = "./addAuthor"> 
-        <button>
+        <button type="button" class="btn btn-success">
             Add Author
         </button> 
     </a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>DOB</th>
+            <th>DOD</th>
+        </tr>
+        <% authorList.forEach( function(author){ %> <!--arr.forEach(function callback(currentValue[, index[, array]]) {}[, thisArg]);-->
+            <tr>
+                <i><%= author.quote %></i> <br>
+                <h2 id="<%= author.authorId %>">
+                    
+                    <td> <%= author.authorId %> </td>
+                    <td> <%= author.firstName %> </td>
+                    <td> <%= author.lastName %> </td>
+                    <td> <%= author.dob %> </td>
+                    <td> <%= author.dod %> </td>
+                    
+                </h2>
+                <td> 
+                    <a href="./update?authorId=<%= author.authorId %>"> <!--Takes to update page-->
+                        <button type="button" class="btn btn-info"> 
+                            Update 
+                        </button>
+                    </a>
+                </td>
+                <td> 
+                    <a onclick="confirmDelete()" class="removeAuthor" href = "./deleteAuthor?authorId=<%= author.authorId %>"> 
+                        <button type="button" class="btn btn-danger">
+                            Delete
+                        </button> 
+                    </a>
+                </td>
+            </tr>
+        <% })  %>
+        
+    </table>
+
     
 </body>
 
