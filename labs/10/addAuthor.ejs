@@ -1,33 +1,37 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> Add Author </title>
-    </head>
-    <body>
+<head>
+    <title> Add Author </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body{
+            font-family: arial, sans-serif;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
 
-        <h1> Adding a New Author </h1>
+    <h1> Adding a New Author </h1>
 
-        <form method="POST">
+    <form method="POST">
+    
+        First name: <input type="text" name="firstName"><br>    
+        Last  name: <input type="text" name="lastName"><br>    
+        Gender: <input type="radio" name="gender" value="F">Female
+                <input type="radio" name="gender" value="M">Male
+        <!--TODO: Add the remaining fields -->
+        <br>
+        Biography: <textarea name="biography" cols="50" height="20"></textarea>
+        <br><br>
+        <button class="btn btn-success">Add Author</button>
+    
+        <%= typeof(message) != "undefined"?message:"" %>
         
-            First name: <input type="text" name="firstName"><br>    
-            Last  name: <input type="text" name="lastName"><br>    
-            Gender: <input type="radio" name="gender" value="F">Female
-                    <input type="radio" name="gender" value="M">Male
-            <!--TODO: Add the remaining fields -->
-            <br>
-            Biography: <textarea name="biography" cols="50" height="20"></textarea>
-            <br><br>
-            <button>Add Author</button>
-        
-            <%= typeof(message) != "undefined"?message:"" %>
-            
-        </form>  
-        
-        <a href = "./authors">
-            <button>
-                Return
-            </button>
-        </a>
-        
-    </body>
-</html>
+    </form>  
+    
+    <a href = "./authors">
+        <button type="button" class="btn btn-info">
+            Return
+        </button>
+    </a>
+    
+</body>
