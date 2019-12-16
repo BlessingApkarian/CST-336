@@ -31,6 +31,7 @@ var promiseRouter = require('./routes/exercise/router'); // create router then c
 var mySQLrouter = require('./public/examples/mySQL/router');
 var lab9Router = require('./labs/9/router');
 var lab10Router = require('./labs/10/router');
+var finalRouter = require('./public/final/routes/router');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -38,6 +39,7 @@ app.use('/exercise', promiseRouter); // calling it
 app.use('/mysql', mySQLrouter);
 app.use('/labs/9', lab9Router);
 app.use('/labs/10', lab10Router);
+app.use('/final', finalRouter);
 
 
 // catch 404 and forward to error handler

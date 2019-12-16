@@ -1,0 +1,338 @@
+<head>
+    <title>Final Exam</title>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    <!--google sign in req-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="299497171148-el7glk1k34rnbc4nm5l3j07bg69a9rgl.apps.googleusercontent.com">
+    
+    
+    <style>
+        #rubric_complete > td{
+            color = green;
+        }
+    </style>
+    
+</head>
+<body>
+    <button id = "logout" class = "btn float-right">Logout</button>
+    <!--<a href = "./login">-->
+    <!--    <button id = "logout" class = "btn float-right">Login</button>-->
+    <!--</a>-->
+    
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    
+    <div class = "container">
+        
+        <br><br>
+        <!--Invitation Link-->
+        <text>Invitation Link</text>
+        <input id = "invitationLink" type = "text" />
+        <!--End Invitation Link-->
+        <br><br>
+
+        <!--Appointment Table-->
+        <table class="table">
+            <thead class = "thead-dark">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Booked By</th>
+                    <th></th>
+                    <th><a> Add Multiple Time Slots <button id = "add_appointment" class="btn btn-primary" >+</button></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--forloop that populates the table with the data from database-->
+                
+                <% table.forEach( function(data){ %>
+                <tr>
+                    <td scope="row">
+                        <%= data.date %>
+                    </td>
+                    <td scope="row">
+                        <%= data.time %>
+                    </td>
+                    <td scope="row">
+                        <%= data.duration %> hour(s)
+                    </td>
+                    <td scope="row">
+                        <%= data.booked_by %>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary">
+                            details
+                        </button>
+                    </td>
+                    <td>
+                        <button id = "<%= data.id %>" class = "btn btn-danger deleteButton" data-toggle="modal" data-target="#deleteModal<%=data.id%>">
+                            delete
+                        </button>
+                        
+                        <div class="alert" role="alert" id="result"></div>
+                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="deleteModal<%=data.id%>">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" table-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Delete Appointment?</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <input type="hidden" id="<%= data.id %>" class = "elementID" name="elementID" value="<%= data.id %>"> 
+                                  Start Time: <%= data.time %>
+                                  <br>
+                                  Duration:  <%= data.duration %> hour
+                                  <br><br>
+                                  <p>Are you sure you want to remove this time slot?<br> This cannot be undone!</p>
+                              </div>
+                              <div class="modal-footer">
+                                <!--should be an AJAX call instead-->
+                                <!--<a href = "./deleteTableElement?id=<%= data.id %>"> -->
+                                    <button type="button" class="btn btn-danger modal-btn-delete" data-dismiss="modal" id = "<%= data.id %>">Delete</button>
+                                <!--</a>-->
+                                <button type="button" class="btn btn-primary modal-btn-cancel" data-dismiss="modal" id="id">Cancel</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    
+                </tr>
+               
+                <% })  %>
+                
+            </tbody>
+        </table>
+        <!--End Appointment Table-->
+    </div>
+    
+    <!--Start of delete Modal Stuff-->
+    <!--ADD-->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="addModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add Appointment</h4>
+          </div>
+          <div class="modal-body">
+              Date: <input id = "add_date" type = "date" /><br>
+              Start Time: <input id = "add_time" type = "time" /><br>
+              Duration: <input id = "add_duration" type = "text" /><br>
+          </div>
+          <div class="modal-footer">
+            <!--should be an AJAX call instead-->
+            <a href = "./addTableElement"> 
+                <button type="button" class="btn btn-danger" id="modal-btn-add">Add</button>
+            </a>
+            <button type="button" class="btn btn-primary" id="modal-btn-cancel-add">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End of Modal Stuff-->
+    <!--rubric-->
+    <table>
+        <thead>
+            <tr>
+            <th style="text-align:left">#</th>
+            <th style="text-align:left">Task Description</th>
+            <th style="text-align:left">Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div id = "rubric_complete">
+            <tr>
+            <td style="text-align:left; color: orange;">1</td>
+            <td style="text-align:left; color: orange;">You provide a ERD diagram representing the data and its relationships. This may be included in Cloud9 as a picture or from a designer tool</td>
+            <td style="text-align:left; color: orange;">10</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: orange;">2</td>
+            <td style="text-align:left; color: orange;">Tables in MySQL match the ERD and support the requirements of the application</td>
+            <td style="text-align:left; color: orange;">20</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">3</td>
+            <td style="text-align:left; color: green;">The list of available appointments is pulled from MySQL using the API endpoint and displayed using the specified page design</td>
+            <td style="text-align:left; color: green;">20</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">4</td>
+            <td style="text-align:left; color: green;">Available times with dates in the past do not show up in the Dashboard list</td>
+            <td style="text-align:left; color: green;">5</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">5</td>
+            <td style="text-align:left; color: green;">A user can add an available time slot to the MySQL using the API endpoint and displayed using the specified modal design</td>
+            <td style="text-align:left; color: green;">20</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">6</td>
+            <td style="text-align:left; color: green;">A user can remove an available time slot from MySQL using the API endpoint</td>
+            <td style="text-align:left; color: green;">15</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">7</td>
+            <td style="text-align:left; color: green;">The user confirms the removal using the specified modal design</td>
+            <td style="text-align:left; color: green;">10</td>
+            </tr>
+            <tr>
+            <td style="text-align:left"></td>
+            <td style="text-align:left">TOTAL</td>
+            <td style="text-align:left">100</td>
+            </tr>
+            </div>
+            <tr>
+            <td style="text-align:left; color: green;"></td>
+            <td style="text-align:left; color: green;">This rubric is properly included AND UPDATED (BONUS)</td>
+            <td style="text-align:left; color: green;">2</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: red;">BD</td>
+            <td style="text-align:left; color: red;">Login works with a User table and BCrypt</td>
+            <td style="text-align:left; color: red;">20</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: green;">BD</td>
+            <td style="text-align:left; color: green;">Add Google Signin for app login</td>
+            <td style="text-align:left; color: green;">10</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: red;">BD</td>
+            <td style="text-align:left; color: red;">The app is deployed to Heroku</td>
+            <td style="text-align:left; color: red;">5</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: orange;">BD</td>
+            <td style="text-align:left; color: orange;">A banner file can be uploaded and displayed</td>
+            <td style="text-align:left; color: orange;">20</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: red;">BD</td>
+            <td style="text-align:left; color: red;">The user can add multiple available time slots as specified</td>
+            <td style="text-align:left; color: red;">10</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: red;">BD</td>
+            <td style="text-align:left; color: red;">In a separate page, you show the correct list of available time slots to the user who navigates to the correct invitation URL</td>
+            <td style="text-align:left; color: red;">10</td>
+            </tr>
+            <tr>
+            <td style="text-align:left; color: red;">BD</td>
+            <td style="text-align:left; color: red;">You correctly implement booking of the appointement, including all side effects</td>
+            <td style="text-align:left; color: red;">30</td>
+            </tr>
+        </tbody>
+    </table> 
+</body>
+<script>
+    /* global $ */
+    
+    $(document).ready(function(){
+       
+        var modalConfirm = function(callback){
+            
+            $(document).on('click', ".modal-btn-delete", function(){
+                console.log("delete element ID",this.id);
+                let id = this.id;
+                callback(true);
+                $.ajax({
+                    type: "POST",
+                    url: "./deleteTableElement",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "id": id
+                    }),
+                    success: function(result, status) {
+                        console.log("delete this element", result);
+                        // This will navigate to wherever i say...
+                        console.log(result);
+                    }
+                });
+                window.location.href = '/final';
+                
+            });
+            
+            $(document).on('click', ".modal-btn-cancel", function(){
+                callback(false);
+            });
+        };
+    
+        modalConfirm(function(confirm){
+           if(confirm){
+               console.log("delete clicked");
+           } 
+        });
+        
+        var todaysDate = new Date();                                // Gets today's date
+        var year = todaysDate.getFullYear();                        // YYYY
+        var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);  // MM
+        var day = ("0" + todaysDate.getDate()).slice(-2);           // DD
+        var minDate = (year +"-"+ month +"-"+ day);                 // Results in "YYYY-MM-DD" for today's date 
+        $("#add_date").attr('min',minDate);                         // sets the date picker to only allow today and future dates
+
+        
+        var modalConfirmAdd = function(callback){
+            $("#add_appointment").on('click', function () {
+                $("#addModal").modal('show');
+            });
+            
+            $("#modal-btn-add").on("click", function(){
+                callback(true);
+                $("#addModal").modal('hide');
+            });
+            
+            $("#modal-btn-cancel-add").on("click", function(){
+                callback(false);
+                $("#addModal").modal('hide');
+            });
+        };
+        
+        modalConfirmAdd(function(confirm){
+            if(confirm){
+                $.ajax({
+                    type: "POST",
+                    url: "./addTableElement",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "date": $("#add_date").val(),
+                        "start_time": $("#add_time").val(),
+                        "duration": $("#add_duration").val()
+                    }),
+                    success: function(result, status) {
+                        if (result.successful) {
+                            window.location.href = '/final';
+                        }
+                    }
+                });
+            }
+        });
+     
+    });    
+    
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        // window.location.href = "/final";
+    }
+
+    
+</script>
